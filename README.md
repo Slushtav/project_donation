@@ -54,7 +54,7 @@ donasi/
 └── database.sql           # Schema & data awal
 ```
 "# project_donation" 
-# project_donation Contributor
+## Contributor
 
 <a href="https://github.com/Slushtav/project_donation/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Slushtav/project_donation" />
