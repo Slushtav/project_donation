@@ -10,6 +10,7 @@ $campaigns = $conn->query("SELECT * FROM campaigns $where ORDER BY created_at DE
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campaign - DonasiKita</title>
     <link rel="stylesheet" href="/donasi/assets/style.css">
 </head>
@@ -19,7 +20,7 @@ $campaigns = $conn->query("SELECT * FROM campaigns $where ORDER BY created_at DE
 <div class="container">
     <h2 class="section-title">Semua Campaign</h2>
 
-    <div style="margin-bottom:20px">
+    <div class="filter-actions">
         <a href="?type=semua" class="btn <?= $filter==='semua'?'btn-primary':'btn-outline' ?> btn-sm">Semua</a>
         <a href="?type=uang"  class="btn <?= $filter==='uang' ?'btn-primary':'btn-outline' ?> btn-sm">💰 Donasi Uang</a>
         <a href="?type=barang" class="btn <?= $filter==='barang'?'btn-primary':'btn-outline' ?> btn-sm">📦 Donasi Barang</a>

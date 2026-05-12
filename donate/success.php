@@ -19,6 +19,7 @@ if (!$donation) redirect('/donasi/index.php');
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donasi Berhasil - DonasiKita</title>
     <link rel="stylesheet" href="/donasi/assets/style.css">
 </head>

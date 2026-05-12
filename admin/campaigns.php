@@ -43,6 +43,7 @@ $campaigns = $conn->query("SELECT * FROM campaigns ORDER BY created_at DESC");
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Campaign - Admin</title>
     <link rel="stylesheet" href="/donasi/assets/style.css">
 </head>
@@ -55,9 +56,9 @@ $campaigns = $conn->query("SELECT * FROM campaigns ORDER BY created_at DESC");
     <?php if ($error): ?><div class="alert alert-error"><?= $error ?></div><?php endif; ?>
     <?php if ($success): ?><div class="alert alert-success"><?= $success ?></div><?php endif; ?>
 
-    <div style="display:grid;grid-template-columns:1fr 2fr;gap:24px;align-items:start">
+    <div class="admin-grid">
         <!-- Form -->
-        <div class="card" style="padding:20px">
+        <div class="card sticky-card">
             <h3 style="margin-bottom:16px">Tambah Campaign</h3>
             <form method="POST">
                 <input type="hidden" name="edit_id" value="0">
@@ -95,6 +96,7 @@ $campaigns = $conn->query("SELECT * FROM campaigns ORDER BY created_at DESC");
 
         <!-- List -->
         <div>
+            <div class="table-wrap">
             <table>
                 <thead>
                     <tr><th>Judul</th><th>Jenis</th><th>Status</th><th>Aksi</th></tr>
@@ -112,6 +114,7 @@ $campaigns = $conn->query("SELECT * FROM campaigns ORDER BY created_at DESC");
                     <?php endwhile; ?>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>
