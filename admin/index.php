@@ -21,6 +21,7 @@ $donations = $conn->query("
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - DonasiKita</title>
     <link rel="stylesheet" href="/donasi/assets/style.css">
 </head>
@@ -31,16 +32,16 @@ $donations = $conn->query("
     <h2 class="section-title">⚙️ Dashboard Admin</h2>
 
     <!-- Stats -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:30px">
+    <div class="stats-grid">
         <?php foreach ([
             ['💰 Total Uang', 'Rp '.number_format($total_uang,0,',','.')],
             ['📦 Total Donasi', $total_donations.' donasi'],
             ['👥 Pengguna', $total_users.' user'],
             ['⏳ Menunggu', $pending.' pending'],
         ] as $s): ?>
-        <div class="card" style="padding:20px;text-align:center">
-            <div style="font-size:1.5rem;font-weight:700;color:#1a73e8"><?= $s[1] ?></div>
-            <div style="font-size:0.85rem;color:#666;margin-top:4px"><?= $s[0] ?></div>
+        <div class="card stat-card">
+            <div class="stat-value"><?= $s[1] ?></div>
+            <div class="stat-label"><?= $s[0] ?></div>
         </div>
         <?php endforeach; ?>
     </div>
@@ -50,6 +51,7 @@ $donations = $conn->query("
         <a href="campaigns.php" class="btn btn-primary btn-sm">Kelola Campaign</a>
     </div>
 
+    <div class="table-wrap">
     <table>
         <thead>
             <tr>
@@ -89,6 +91,7 @@ $donations = $conn->query("
             <?php endwhile; ?>
         </tbody>
     </table>
+    </div>
 </div>
 
 <?php include '../includes/footer.php'; ?>
