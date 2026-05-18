@@ -15,6 +15,7 @@ $donations = $conn->query("
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Donasi - DonasiKita</title>
     <link rel="stylesheet" href="/donasi/assets/style.css">
 </head>
@@ -27,6 +28,7 @@ $donations = $conn->query("
     <?php if ($donations->num_rows === 0): ?>
         <div class="alert alert-info">Kamu belum pernah berdonasi. <a href="/donasi/campaigns/list.php">Mulai donasi sekarang!</a></div>
     <?php else: ?>
+    <div class="table-wrap">
     <table>
         <thead>
             <tr>
@@ -57,6 +59,7 @@ $donations = $conn->query("
             <?php endwhile; ?>
         </tbody>
     </table>
+    </div>
     <?php endif; ?>
 </div>
 
