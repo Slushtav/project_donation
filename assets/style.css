@@ -336,6 +336,9 @@ tr:hover td { background: #f8fbff; }
 /* FOOTER */
 footer { text-align: center; padding: 28px 20px 36px; color: var(--muted); font-size: 0.9rem; margin-top: 48px; border-top: 1px solid rgba(148, 163, 184, 0.2); }
 
+/* FOOTER */
+footer { text-align: center; padding: 28px 20px 36px; color: var(--muted); font-size: 0.9rem; margin-top: 48px; border-top: 1px solid rgba(148, 163, 184, 0.2); }
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
     .layout-detail, .admin-grid, .stats-grid { grid-template-columns: 1fr; }
