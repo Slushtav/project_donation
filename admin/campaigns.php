@@ -8,23 +8,49 @@ $error = $success = '';
 
 // Handle add/edit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title  = trim($_POST['title']);
-    $desc   = trim($_POST['description']);
-    $target = (float)$_POST['target_amount'];
-    $type   = $_POST['type'];
-    $status = $_POST['status'];
+    $title   = trim($_POST['title']);
+    $desc    = trim($_POST['description']);
+    $target  = (float)$_POST['target_amount'];
+    $type    = 'keduanya';
+    $status  = $_POST['status'];
     $edit_id = (int)($_POST['edit_id'] ?? 0);
+    $image   = trim($_POST['existing_image'] ?? '');
+
+    if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+        if ($_FILES['image_file']['error'] !== UPLOAD_ERR_OK) {
+            $error = 'Gambar campaign gagal diupload.';
+        } else {
+            $allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            $ext = strtolower(pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION));
+
+            if (!in_array($ext, $allowed_ext)) {
+                $error = 'Format gambar harus JPG, PNG, GIF, atau WebP.';
+            } else {
+                $upload_dir = __DIR__ . '/../assets/images';
+                if (!is_dir($upload_dir)) {
+                    mkdir($upload_dir, 0775, true);
+                }
+
+                $safe_name = preg_replace('/[^a-zA-Z0-9_-]/', '-', pathinfo($_FILES['image_file']['name'], PATHINFO_FILENAME));
+                $image = 'campaign-' . time() . '-' . $safe_name . '.' . $ext;
+
+                if (!move_uploaded_file($_FILES['image_file']['tmp_name'], $upload_dir . '/' . $image)) {
+                    $error = 'Gambar campaign gagal disimpan.';
+                }
+            }
+        }
+    }
 
     if (!$title) {
         $error = 'Judul wajib diisi.';
-    } elseif ($edit_id) {
-        $stmt = $conn->prepare("UPDATE campaigns SET title=?,description=?,target_amount=?,type=?,status=? WHERE id=?");
-        $stmt->bind_param("ssdssi", $title, $desc, $target, $type, $status, $edit_id);
+    } elseif (!$error && $edit_id) {
+        $stmt = $conn->prepare("UPDATE campaigns SET title=?,description=?,image=?,target_amount=?,type=?,status=? WHERE id=?");
+        $stmt->bind_param("sssdssi", $title, $desc, $image, $target, $type, $status, $edit_id);
         $stmt->execute();
         $success = 'Campaign berhasil diperbarui.';
-    } else {
-        $stmt = $conn->prepare("INSERT INTO campaigns (title,description,target_amount,type,status) VALUES (?,?,?,?,?)");
-        $stmt->bind_param("ssdss", $title, $desc, $target, $type, $status);
+    } elseif (!$error) {
+        $stmt = $conn->prepare("INSERT INTO campaigns (title,description,image,target_amount,type,status) VALUES (?,?,?,?,?,?)");
+        $stmt->bind_param("sssdss", $title, $desc, $image, $target, $type, $status);
         $stmt->execute();
         $success = 'Campaign berhasil ditambahkan.';
     }
@@ -60,7 +86,7 @@ $campaigns = $conn->query("SELECT * FROM campaigns ORDER BY created_at DESC");
         <!-- Form -->
         <div class="card sticky-card">
             <h3 style="margin-bottom:16px">Tambah Campaign</h3>
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="edit_id" value="0">
                 <div class="form-group">
                     <label>Judul</label>
@@ -71,16 +97,14 @@ $campaigns = $conn->query("SELECT * FROM campaigns ORDER BY created_at DESC");
                     <textarea name="description"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Target (Rp, 0 = tanpa target)</label>
-                    <input type="number" name="target_amount" value="0" min="0">
+                    <label>Target Campaign (Rp)</label>
+                    <input type="number" name="target_amount" value="0" min="0" step="1000" required>
                 </div>
                 <div class="form-group">
-                    <label>Jenis Donasi</label>
-                    <select name="type">
-                        <option value="keduanya">Uang & Barang</option>
-                        <option value="uang">Uang saja</option>
-                        <option value="barang">Barang saja</option>
-                    </select>
+                    <label>Gambar Campaign</label>
+                    <input type="file" name="image_file" accept="image/png,image/jpeg,image/gif,image/webp">
+                    <input type="hidden" name="existing_image" value="">
+                    <small style="color:#888">Upload JPG, PNG, GIF, atau WebP. Semua campaign otomatis menerima uang & barang.</small>
                 </div>
                 <div class="form-group">
                     <label>Status</label>
@@ -99,13 +123,18 @@ $campaigns = $conn->query("SELECT * FROM campaigns ORDER BY created_at DESC");
             <div class="table-wrap">
             <table>
                 <thead>
-                    <tr><th>Judul</th><th>Jenis</th><th>Status</th><th>Aksi</th></tr>
+                    <tr><th>Gambar</th><th>Judul</th><th>Target</th><th>Status</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                     <?php while ($c = $campaigns->fetch_assoc()): ?>
                     <tr>
+                        <td>
+                            <img src="/donasi/assets/images/<?= htmlspecialchars($c['image'] ?? 'default.jpg') ?>"
+                                 onerror="this.src='https://placehold.co/96x60/2563eb/white?text=Campaign'"
+                                 class="table-thumb" alt="">
+                        </td>
                         <td><?= htmlspecialchars($c['title']) ?></td>
-                        <td><?= ucfirst($c['type']) ?></td>
+                        <td>Rp <?= number_format($c['target_amount'], 0, ',', '.') ?></td>
                         <td><span class="badge badge-<?= $c['status'] ?>"><?= ucfirst($c['status']) ?></span></td>
                         <td>
                             <a href="?delete=<?= $c['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Hapus campaign ini?')">Hapus</a>

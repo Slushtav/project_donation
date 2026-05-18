@@ -63,8 +63,8 @@ $recent = $conn->query("
             </p>
             <?php endif; ?>
 
-            <div class="pixel-panel donation-prompt">
-                <span class="pixel-heart" aria-hidden="true"></span>
+            <div class="info-panel donation-prompt">
+                <span class="info-icon" aria-hidden="true">🎯</span>
                 <div>
                     <strong>Pilih jenis donasi</strong>
                     <p>Semua campaign bisa dibantu dengan uang atau barang.</p>

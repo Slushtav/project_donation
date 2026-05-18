@@ -26,7 +26,8 @@ http://localhost/donasi/
 ## Akun Default
 | Role  | Email              | Password  |
 |-------|--------------------|-----------|
-| Admin | admin@donasi.com   | password  |
+| Admin Utama | admin@donasi.com    | password  |
+| Admin Campaign | campaign@donasi.com | password  |
 
 > Catatan: Password default di database.sql adalah hash dari "password". Ganti setelah login pertama.
 

@@ -18,8 +18,8 @@ $campaigns = $conn->query("SELECT * FROM campaigns WHERE status='aktif' ORDER BY
 <div class="container">
     <h2 class="section-title">Pilih Campaign</h2>
 
-    <div class="pixel-panel campaign-note">
-        <span class="pixel-heart" aria-hidden="true"></span>
+    <div class="info-panel campaign-note">
+        <span class="info-icon" aria-hidden="true">🤝</span>
         <div>
             <strong>Semua campaign menerima donasi uang dan barang.</strong>
             <p>Pilih campaign yang ingin kamu bantu, lalu tentukan jenis donasinya di halaman detail.</p>

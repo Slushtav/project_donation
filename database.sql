@@ -38,12 +38,13 @@ CREATE TABLE donations (
     FOREIGN KEY (campaign_id) REFERENCES campaigns(id)
 );
 
--- Admin default (password: admin123)
+-- Admin default (password: password)
 INSERT INTO users (name, email, password, role) VALUES
-('Admin', 'admin@donasi.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
+('Admin', 'admin@donasi.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
+('Admin Campaign', 'campaign@donasi.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
 
--- Sample campaigns
+-- Campaign awal: semua menerima donasi uang dan barang
 INSERT INTO campaigns (title, description, image, target_amount, type) VALUES
-('Bantu Korban Banjir Cianjur', 'Donasi untuk membantu korban banjir di Cianjur yang membutuhkan bantuan segera.', 'banjir.jpg', 50000000, 'keduanya'),
-('Beasiswa Anak Yatim', 'Program beasiswa untuk anak yatim agar bisa melanjutkan pendidikan.', 'beasiswa.jpg', 30000000, 'uang'),
-('Sembako untuk Dhuafa', 'Pengumpulan sembako untuk keluarga kurang mampu di sekitar kita.', 'sembako.jpg', 0, 'barang');
+('Korban Banjir Cianjur', 'Bantuan untuk warga terdampak banjir Cianjur berupa dana darurat, makanan, pakaian, dan kebutuhan pokok.', 'banjir-cianjur.jpg', 50000000, 'keduanya'),
+('Beasiswa Anak Yatim', 'Program beasiswa untuk anak yatim agar tetap bisa melanjutkan pendidikan dan membeli perlengkapan sekolah.', 'beasiswa-anak-yatim.jpg', 40000000, 'keduanya'),
+('Korban Longsor Lombok', 'Bantuan pemulihan untuk korban longsor Lombok, termasuk kebutuhan logistik, obat-obatan, dan tempat tinggal sementara.', 'longsor-lombok.jpg', 60000000, 'keduanya');
