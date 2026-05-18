@@ -2,9 +2,7 @@
 session_start();
 require_once '../config/db.php';
 
-$filter = $_GET['type'] ?? 'semua';
-$where  = $filter !== 'semua' ? "WHERE status='aktif' AND (type='$filter' OR type='keduanya')" : "WHERE status='aktif'";
-$campaigns = $conn->query("SELECT * FROM campaigns $where ORDER BY created_at DESC");
+$campaigns = $conn->query("SELECT * FROM campaigns WHERE status='aktif' ORDER BY created_at DESC");
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -18,12 +16,14 @@ $campaigns = $conn->query("SELECT * FROM campaigns $where ORDER BY created_at DE
 <?php include '../includes/navbar.php'; ?>
 
 <div class="container">
-    <h2 class="section-title">Semua Campaign</h2>
+    <h2 class="section-title">Pilih Campaign</h2>
 
-    <div class="filter-actions">
-        <a href="?type=semua" class="btn <?= $filter==='semua'?'btn-primary':'btn-outline' ?> btn-sm">Semua</a>
-        <a href="?type=uang"  class="btn <?= $filter==='uang' ?'btn-primary':'btn-outline' ?> btn-sm">💰 Donasi Uang</a>
-        <a href="?type=barang" class="btn <?= $filter==='barang'?'btn-primary':'btn-outline' ?> btn-sm">📦 Donasi Barang</a>
+    <div class="pixel-panel campaign-note">
+        <span class="pixel-heart" aria-hidden="true"></span>
+        <div>
+            <strong>Semua campaign menerima donasi uang dan barang.</strong>
+            <p>Pilih campaign yang ingin kamu bantu, lalu tentukan jenis donasinya di halaman detail.</p>
+        </div>
     </div>
 
     <div class="grid-3">
@@ -43,7 +43,7 @@ $campaigns = $conn->query("SELECT * FROM campaigns $where ORDER BY created_at DE
                 <small><?= $pct ?>% &bull; Rp <?= number_format($c['collected_amount'], 0, ',', '.') ?></small>
                 <?php endif; ?>
                 <br><br>
-                <a href="detail.php?id=<?= $c['id'] ?>" class="btn btn-primary btn-sm">Donasi Sekarang</a>
+                <a href="detail.php?id=<?= $c['id'] ?>" class="btn btn-primary btn-sm">Pilih Campaign</a>
             </div>
         </div>
         <?php endwhile; ?>

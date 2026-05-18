@@ -40,7 +40,7 @@ $campaigns = $conn->query("SELECT * FROM campaigns WHERE status='aktif' LIMIT 6"
                 <small>Rp <?= number_format($c['collected_amount'], 0, ',', '.') ?> dari Rp <?= number_format($c['target_amount'], 0, ',', '.') ?></small>
                 <?php endif; ?>
                 <br><br>
-                <a href="/donasi/campaigns/detail.php?id=<?= $c['id'] ?>" class="btn btn-primary btn-sm">Donasi Sekarang</a>
+                <a href="/donasi/campaigns/detail.php?id=<?= $c['id'] ?>" class="btn btn-primary btn-sm">Pilih Campaign</a>
             </div>
         </div>
         <?php endwhile; ?>

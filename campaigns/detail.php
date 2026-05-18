@@ -63,20 +63,30 @@ $recent = $conn->query("
             </p>
             <?php endif; ?>
 
-            <p style="font-size:0.85rem;margin:10px 0">
-                Jenis donasi: <strong><?= ucfirst($campaign['type']) ?></strong>
-            </p>
+            <div class="pixel-panel donation-prompt">
+                <span class="pixel-heart" aria-hidden="true"></span>
+                <div>
+                    <strong>Pilih jenis donasi</strong>
+                    <p>Semua campaign bisa dibantu dengan uang atau barang.</p>
+                </div>
+            </div>
 
             <?php if ($campaign['status'] === 'aktif'): ?>
                 <?php if (isLoggedIn()): ?>
-                    <?php if (in_array($campaign['type'], ['uang','keduanya'])): ?>
-                    <a href="/donasi/donate/form.php?campaign_id=<?= $id ?>&type=uang" class="btn btn-primary" style="width:100%;margin-bottom:8px;text-align:center">💰 Donasi Uang</a>
-                    <?php endif; ?>
-                    <?php if (in_array($campaign['type'], ['barang','keduanya'])): ?>
-                    <a href="/donasi/donate/form.php?campaign_id=<?= $id ?>&type=barang" class="btn btn-success" style="width:100%;text-align:center">📦 Donasi Barang</a>
-                    <?php endif; ?>
+                    <div class="donation-choice-grid">
+                        <a href="/donasi/donate/form.php?campaign_id=<?= $id ?>&type=uang" class="type-card donation-choice money">
+                            <span class="icon">💰</span>
+                            <h4>Donasi Uang</h4>
+                            <p>Bantu cepat lewat nominal terbaikmu.</p>
+                        </a>
+                        <a href="/donasi/donate/form.php?campaign_id=<?= $id ?>&type=barang" class="type-card donation-choice goods">
+                            <span class="icon">📦</span>
+                            <h4>Donasi Barang</h4>
+                            <p>Kirim barang layak untuk kebutuhan campaign.</p>
+                        </a>
+                    </div>
                 <?php else: ?>
-                    <a href="/donasi/auth/login.php" class="btn btn-primary" style="width:100%;text-align:center">Login untuk Donasi</a>
+                    <a href="/donasi/auth/login.php" class="btn btn-primary" style="width:100%;text-align:center">Login untuk Pilih Donasi</a>
                 <?php endif; ?>
             <?php else: ?>
                 <p class="alert alert-info">Campaign ini sudah ditutup.</p>
