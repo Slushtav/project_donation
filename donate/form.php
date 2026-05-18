@@ -17,6 +17,7 @@ if (!in_array($type, ['uang','barang'])) $type = 'uang';
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Donasi - DonasiKita</title>
     <link rel="stylesheet" href="/donasi/assets/style.css">
 </head>
